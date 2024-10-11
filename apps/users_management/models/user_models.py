@@ -11,7 +11,9 @@ from backend.utils.text_choices import UserType
 def attachment_path(instance, filename):
     time = timezone.now().strftime("%Y%m%d%H%M%S")
     filename_update = f"{time}_{filename}"
-    return "users/{username}/{file}".format(username=instance.username, file=filename_update)
+    return "users/{username}/{file}".format(
+        username=instance.username, file=filename_update
+    )
 
 
 class UserManage(AbstractUser):
