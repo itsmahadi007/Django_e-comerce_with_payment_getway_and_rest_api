@@ -6,6 +6,7 @@ from django.db.models import QuerySet
 from django.utils import timezone
 
 from apps.notification_management.models.email_queue_models import EmailQueue
+
 # Import the EmailQueue model and the mail_blast task function
 from .sent_mail import sent_mail
 from .text_choices import EmailPriorityStatus, EmailSentStatus
@@ -14,13 +15,13 @@ from .text_choices import EmailPriorityStatus, EmailSentStatus
 # email to user --> email_queue_overhauler --> mail_blast
 # use this function from all the apis or places where you want to send email
 def email_queue_overhauler(
-        subject=None,  # Subject of the email
-        body=None,  # Body of the email
-        from_email=None,  # Email address the email will be sent from
-        to_email=None,  # Email address the email will be sent to
-        priority=None,  # Priority status of the email in the queue
-        context=None,  # Contextual information for the email, possibly used in templates
-        attachment=None,
+    subject=None,  # Subject of the email
+    body=None,  # Body of the email
+    from_email=None,  # Email address the email will be sent from
+    to_email=None,  # Email address the email will be sent to
+    priority=None,  # Priority status of the email in the queue
+    context=None,  # Contextual information for the email, possibly used in templates
+    attachment=None,
 ):
     # Ensure to_email is a list
     if isinstance(to_email, QuerySet):

@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vitlous {{ title }}</title>
+
+    <style>
+        body {
+            height: 100vh;
+            background: #d7d7d7;
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue'
+        }
+
+        .container {
+            height: 100%;
+            display: flex;
+        }
+
+        .title {
+            color: #169216;
+            font-weight: 700;
+            margin-top: 1rem;
+            text-align: center;
+            line-height: 2.1rem;
+            font-size: 2rem;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .justfy-center {
+            justify-content: center;
+        }
+
+        .align-center {
+            align-items: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .card {
+            background: #fff;
+            padding: 3rem;
+        }
+
+        .text {
+            font-size: 1rem;
+            line-height: 1.37rem;
+            color: #464646;
+        }
+
+        .line {
+            height: 1px;
+            background-color: #d7d7d7;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container align-center justfy-center">
+    <div class="card">
+        {#        <div class="flex justfy-center ">#}
+        {#            <img src="{% static 'payment_status_src/successIcon.svg' %}" alt="GO" width="45">#}
+        {#        </div>#}
+        <h1 class="title"> Payment received</h1>
+
+        <div class="text">
+            <p>Hi {{ cus_name }},</p>
+            <p>Your transaction was successful!</p>
+            <p>
+                <strong>Payment Details</strong> <br>
+                Amount:{{ currency }} {{ amount }} <br/>
+                Status: {{ pay_status }} <br/>
+                Transaction ID: {{ transactionId }} <br/>
+            </p>
+            <p>
+                We advise to keep this email for future reference. <br> <br/>
+            </p>
+        </div>
+        <p class="line"></p>
+        <p class="text text-center">
+            <strong>Merchant reference: {{ mer_txnid }}</strong>
+        </p>
+        <p class="text text-center">
+            Order date: {{ pay_time }}</p>
+        <p>
+        </p>
+    </div>
+</div>
+</body>
+
+</html>

@@ -29,18 +29,18 @@ class EmailVerification(models.Model):
 
     def __str__(self):
         return (
-                " ID "
-                + str(self.id)
-                + " - "
-                + str(self.user.username)
-                + " - "
-                + str(self.user.email)
-                + " - "
-                + self.otp
-                + " - "
-                + str(self.used)
-                + " - "
-                + str(self.expires_at)
-                + " - "
-                + str(self.using_for)
+            " ID "
+            + str(self.id)
+            + " - "
+            + str(self.user.username)
+            + " - "
+            + str(self.user.email)
+            + " - "
+            + self.otp
+            + " - "
+            + str(self.used)
+            + " - "
+            + str(self.expires_at)
+            + " - "
+            + str(self.using_for)
         )

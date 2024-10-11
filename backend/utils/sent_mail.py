@@ -3,12 +3,12 @@ from django.core.mail import EmailMultiAlternatives
 
 
 def sent_mail(
-        subject=None,
-        message=None,
-        to_email=None,
-        from_email=None,
-        template=None,
-        attachment=None,
+    subject=None,
+    message=None,
+    to_email=None,
+    from_email=None,
+    template=None,
+    attachment=None,
 ):
     email_from = settings.EMAIL_HOST_USER
 

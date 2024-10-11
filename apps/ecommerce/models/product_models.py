@@ -12,9 +12,13 @@ class ProductsModel(ECommerceBaseModel):
         max_length=100, choices=ProductsUnits.choices, default=ProductsUnits.OTHER
     )
     stock = models.FloatField(default=0)
-    image = models.ImageField(upload_to='products/', blank=True, null=True)
-    image_thumbnail = AdvanceThumbnailField(source_field="image", upload_to='products/', blank=True, null=True)
-    unite_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
+    image = models.ImageField(upload_to="products/", blank=True, null=True)
+    image_thumbnail = AdvanceThumbnailField(
+        source_field="image", upload_to="products/", blank=True, null=True
+    )
+    unite_price = models.DecimalField(
+        max_digits=10, decimal_places=2, null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.pk} - {self.name} - {self.unit} - {self.stock} - {self.unite_price} - {self.updated_at}"

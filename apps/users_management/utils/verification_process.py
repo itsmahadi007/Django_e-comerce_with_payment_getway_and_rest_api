@@ -23,9 +23,9 @@ def email_otp_process_before_sent(user, using_for):
         email_verification = EmailVerification.objects.get(user=user)
         time_diff = timezone.now() - email_verification.created_at
         if (
-                email_verification.used
-                or timezone.now() > email_verification.expires_at
-                or time_diff > datetime.timedelta(minutes=1)
+            email_verification.used
+            or timezone.now() > email_verification.expires_at
+            or time_diff > datetime.timedelta(minutes=1)
         ):
             email_verification.expires_at = timezone.now() + datetime.timedelta(days=1)
             email_verification.created_at = timezone.now()
@@ -55,11 +55,11 @@ def email_otp_process_before_sent(user, using_for):
 
 
 def email_otp_verification(
-        user,
-        otp,
-        using_for,
-        password=None,
-        request=None,
+    user,
+    otp,
+    using_for,
+    password=None,
+    request=None,
 ):
     try:
         email_verification = EmailVerification.objects.get(user=user)

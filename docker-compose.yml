@@ -1,0 +1,82 @@
+version: '3'
+
+services:
+  dev_db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1516
+      - POSTGRES_DB=ecommerce
+    ports:
+      - "5446:5446"
+    command: -p 5446
+    restart: always
+
+  dev_redis:
+    image: redis:5-alpine
+    ports:
+      - "6399:6399"
+    command: --port 6399
+    restart: always
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DJANGO_RUNNING_IN_DOCKER=True
+    env_file:
+      - .env.server
+    depends_on:
+      - dev_db
+      - dev_redis
+    command: uvicorn backend.asgi:application --reload --reload-dir /app/backend --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/app/backend
+    ports:
+      - "8000:8000"
+    restart: always
+
+  dev_celery_worker:
+    build: .
+    environment:
+      - DJANGO_RUNNING_IN_DOCKER=True
+    command: celery -A backend worker --loglevel=info
+    volumes:
+      - .:/app/celery
+    depends_on:
+      - dev_redis
+    restart: always
+
+  dev_celery_beat:
+    build: .
+    environment:
+      - DJANGO_RUNNING_IN_DOCKER=True
+    command: celery -A backend beat --loglevel=info
+    volumes:
+      - .:/app/celery
+    depends_on:
+      - dev_redis
+    restart: always
+
+  dev_db_backup:
+    image: postgres
+    environment:
+      - PGPASSWORD=1516
+    volumes:
+      - ./backup_database:/backup
+    depends_on:
+      - dev_db
+    profiles:
+      - backup
+
+  dev_db_restore:
+    image: postgres
+    environment:
+      - PGPASSWORD=1516
+    volumes:
+      - ./backup_database:/backup
+    depends_on:
+      - dev_db
+    profiles:
+      - restore

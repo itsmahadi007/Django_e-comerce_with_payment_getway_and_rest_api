@@ -5,11 +5,18 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from apps.users_management.views.user_email_mobile_verification import request_email_verification, verify_email_otp
+from apps.users_management.views.user_email_mobile_verification import (
+    request_email_verification,
+    verify_email_otp,
+)
 from apps.users_management.views.user_login import CustomLoginView
 from apps.users_management.views.user_registration import CustomRegisterView
-from apps.users_management.views.user_view import user_update, check_unique_username, check_unique_email, \
-    user_information
+from apps.users_management.views.user_view import (
+    user_update,
+    check_unique_username,
+    check_unique_email,
+    user_information,
+)
 
 route = routers.DefaultRouter()
 # route.register("users", UserViewSet)

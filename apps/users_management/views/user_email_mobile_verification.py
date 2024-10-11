@@ -6,7 +6,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from apps.users_management.models import UserManage
-from apps.users_management.utils.verification_process import email_otp_verification, email_otp_process_before_sent
+from apps.users_management.utils.verification_process import (
+    email_otp_verification,
+    email_otp_process_before_sent,
+)
 from backend.utils.text_choices import VerificationForStatus
 
 

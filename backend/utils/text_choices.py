@@ -21,7 +21,9 @@ class EmailPriorityStatus(models.TextChoices):
 
 class EmailSentStatus(models.TextChoices):
     PENDING = "PENDING", gettext_lazy("Pending")  # Email is pending to be sent
-    IN_PROGRESS = "IN_PROGRESS", gettext_lazy("In Progress")  # Email is in progress of being sent
+    IN_PROGRESS = "IN_PROGRESS", gettext_lazy(
+        "In Progress"
+    )  # Email is in progress of being sent
     SENT = "SENT", gettext_lazy("Sent")  # Email has been sent successfully
     FAILED = "FAILED", gettext_lazy("Failed")  # Email failed to send
 

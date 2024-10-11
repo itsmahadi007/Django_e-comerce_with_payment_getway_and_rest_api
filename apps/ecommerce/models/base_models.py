@@ -6,13 +6,14 @@ class ECommerceBaseModel(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     created_by = models.ForeignKey(
-        'users_management.UserManage',
+        "users_management.UserManage",
         on_delete=models.CASCADE,
-        related_name='created_%(class)ss'
+        related_name="created_%(class)ss",
     )
     updated_by = models.ForeignKey(
-        'users_management.UserManage',
+        "users_management.UserManage",
         on_delete=models.CASCADE,
-        related_name='updated_%(class)ss',
-        null=True, blank=True
+        related_name="updated_%(class)ss",
+        null=True,
+        blank=True,
     )
