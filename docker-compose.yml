@@ -11,7 +11,7 @@ services:
     restart: always
 
   dev_redis:
-    image: redis:5-alpine
+    image: redis:7-alpine
     ports:
       - "6399:6399"
     command: --port 6399
