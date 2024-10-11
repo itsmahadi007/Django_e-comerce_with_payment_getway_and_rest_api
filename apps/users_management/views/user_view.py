@@ -5,6 +5,7 @@ from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from apps.users_management.models import UserManage
 from apps.users_management.serializers.basic_users_serializer import UserSerializerShort
@@ -111,3 +112,34 @@ def check_unique_email(request):
         return Response(
             {"email": "Email is required."}, status=status.HTTP_400_BAD_REQUEST
         )
+
+class TestMail(APIView):
+    permission_classes = [AllowAny]
+
+    @staticmethod
+    def post(request):
+        print(request.data["email"])
+        # sent_mail(
+        #     "Testing subject",
+        #     "Testing body 007",
+        #     [request.data["email"]],
+        # )
+        priority_set = request.data["priority"]
+        if priority_set == "LOW":
+            priority = EmailPriorityStatus.LOW
+        elif priority_set == "NORMAL":
+            priority = EmailPriorityStatus.NORMAL
+        elif priority_set == "HIGH":
+            priority = EmailPriorityStatus.HIGH
+        else:
+            priority = EmailPriorityStatus.HIGH
+        email_queue_overhauler(
+            subject="Testing subject",
+            body="Testing body 007",
+            to_email=request.data["email"],
+            priority=priority,
+            context=None,
+        )
+        return Response({"message": "mail sent"})
+
+

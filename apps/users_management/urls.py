@@ -15,7 +15,7 @@ from apps.users_management.views.user_view import (
     user_update,
     check_unique_username,
     check_unique_email,
-    user_information,
+    user_information, TestMail,
 )
 
 route = routers.DefaultRouter()
@@ -34,4 +34,5 @@ urlpatterns = [
     path("check_unique_username/", check_unique_username),
     path("check_unique_email/", check_unique_email),
     path("current-user/", user_information, name="current-user"),
+    path("test_mail/", TestMail.as_view(), name="test_mail"),
 ]
