@@ -51,3 +51,16 @@ class OrderAndShippingModel(ECommerceBaseModel):
 
     def __str__(self):
         return f"PK:{self.pk} - Cart ID:{self.cart.id} - {self.shipping_status}"
+
+
+class ProductReviewModel(ECommerceBaseModel):
+    cart_item = models.ForeignKey(
+        ShoppingCartItemModel,
+        on_delete=models.CASCADE,
+        related_name="cart_item_reviews",
+    )
+    review = models.TextField()
+    rating = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.pk} - {self.cart_item.product} - {self.cart_item.cart.user} - {self.rating}"

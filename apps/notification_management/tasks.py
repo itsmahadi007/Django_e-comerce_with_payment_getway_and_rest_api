@@ -5,6 +5,7 @@ from celery.utils.log import get_task_logger
 from django.db import transaction
 from django.utils import timezone
 
+from apps.ecommerce.utils.update_admin_about_stock_low import check_stock_and_notify_admins
 from apps.notification_management.models import EmailQueue
 from backend.utils.sent_mail import sent_mail
 from backend.utils.text_choices import EmailSentStatus
@@ -68,3 +69,15 @@ def mail_blast():
                 )
 
     logger.info(f"\n ***** Mail_blast Ended")
+
+
+@shared_task(name="apps.notification_management.tasks.stock_update_mail")
+def stock_update_mail():
+    logger.info(f"\n ***** stock_update_mail Started")
+
+    try:
+        check_stock_and_notify_admins()
+    except Exception as e:
+        logger.error(f"Error in check_stock_and_notify_admins: {e}")
+
+    logger.info(f"\n ***** stock_update_mail Ended")

@@ -6,7 +6,7 @@ from apps.ecommerce.filters.product_filters import ProductsModelFilter
 from apps.ecommerce.models import ProductsModel
 from apps.ecommerce.serializer.product_serializer import (
     ProductsModelSerializer,
-    ProductsModelSerializerDetails,
+    ProductsModelSerializerDetails, ProductsModelSerializerDetailsWithReview,
 )
 from backend.utils.custom_permission import (
     OnlyAdminCanCreateUpdateAndDeleteAnyoneCanGet,
@@ -28,7 +28,7 @@ class ProductsModelViewSet(viewsets.ModelViewSet):
 
     serializer_classes = {
         "list": ProductsModelSerializerDetails,
-        "retrieve": ProductsModelSerializerDetails,
+        "retrieve": ProductsModelSerializerDetailsWithReview,
         "create": ProductsModelSerializer,
         "update": ProductsModelSerializer,
     }
