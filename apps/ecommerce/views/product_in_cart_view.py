@@ -27,8 +27,18 @@ class ProductCartsView(APIView):
             "cart_items__updated_by",
             "cart_items__product",
         )
+
         if not carts.exists():
-            carts = ShoppingCartModel.objects.create(user=user)
+            ShoppingCartModel.objects.create(user=user, created_by=user, updated_by=user)
+            carts = ShoppingCartModel.objects.filter(
+                user=user, is_purchased=False
+            ).prefetch_related(
+                "cart_items",
+                "cart_items__created_by",
+                "cart_items__updated_by",
+                "cart_items__product",
+            )
+
         serializer = ShoppingCartModelSerializerDetails(carts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -46,6 +56,7 @@ class ProductCartsView(APIView):
         with transaction.atomic():
             if serializer.is_valid():
                 item = serializer.save(cart=cart, created_by=user, updated_by=user)
+                item.unit_price = Decimal(item.product.unite_price)
                 self.update_item_price(item)
                 self.update_cart_price(cart)
                 return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -93,7 +104,7 @@ class ProductCartsView(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
     def update_item_price(self, item):
-        item.price = Decimal(item.unit_price) * item.quantity
+        item.price = float(item.unit_price) * item.quantity
         item.save()
 
     def update_cart_price(self, cart):

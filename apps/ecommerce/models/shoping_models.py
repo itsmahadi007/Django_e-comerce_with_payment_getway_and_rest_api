@@ -37,14 +37,6 @@ class ShoppingCartItemModel(ECommerceBaseModel):
         return (f"{self.pk} - {self.cart} - {self.product} - "
                 f"{self.quantity} - {self.updated_at}")
 
-    def save(self, *args, **kwargs):
-        if self.cart.is_purchased:
-            return
-        self.price = float(self.unit_price) * self.quantity
-        super().save(*args, **kwargs)
-
-        self.cart.price = sum([item.price for item in self.cart.cart_items.all()])
-        self.cart.save()
 
 
 class OrderAndShippingModel(ECommerceBaseModel):

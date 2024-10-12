@@ -32,4 +32,9 @@ urlpatterns = [
         ProductCartsView.as_view(),
         name="ProductCartsView",
     ),
+    path(
+        "product_cart/<int:pk>/",
+        ProductCartsView.as_view(),
+        name="ProductCartsDetailView",
+    ),
 ]
